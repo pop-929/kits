@@ -4,7 +4,7 @@
 @E-mail: pop929@qq.com
 @Date: 2020-06-03 13:32:24
 @Version: 1.0.1
-@LastEditTime: 2020-06-03 16:25:28
+@LastEditTime: 2020-06-04 22:01:33
 '''
 
 
@@ -13,8 +13,10 @@ from PIL import Image
 import threading
 import time
 
-src="E:\\动漫\\GHS\\大"  #开始目录
-dst="E:\\动漫\\GHS\\小"  #目标目录
+src="E:\\动漫\\图片\\大"  #开始目录
+dst="E:\\动漫\\图片\\小"  #目标目录
+#src="E:\\动漫\\动图\\大"  #开始目录
+#dst="E:\\动漫\\动图\\小"  #目标目录
 folderlist=os.listdir(src)
 file_total=len(folderlist) #文件总数
 i=0 #执行过的文件数(开始目录下的)

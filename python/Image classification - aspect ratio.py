@@ -3,8 +3,8 @@
 @Author: pop
 @E-mail: pop929@qq.com
 @Date: 2020-05-08 21:34:18
-@Version: 1.3.2
-@LastEditTime: 2020-06-03 16:31:41
+@Version: 1.3.3
+@LastEditTime: 2020-06-04 22:04:10
 '''
 
 
@@ -14,7 +14,8 @@ import threading
 import time
 
 
-file_path="E:\\动漫\\GHS"  #开始目录
+#file_path="E:\\动漫\\图片"  #开始目录
+file_path="E:\\动漫\\动图"  #开始目录
 #file_path="D:\\图片\\临时"  
 folderlist=os.listdir(file_path)
 file_total=len(folderlist) #文件总数
@@ -48,9 +49,14 @@ def progress(t_sum):
     f.close()
 
 def get_size(img):
-    #size=os.path.getsize(img)
-    #return size>>20
-    return os.path.getsize(img)>>10
+    try:
+        size=os.path.getsize(img)
+    except:
+        f_1.acquire()
+        f.write('------图片找不到：'+img+'  --------\n')
+        f_1.release()
+        return -1
+    return size>>10
 
 def find(filelist,new_path,tn):
     total[tn]+=len(filelist) #文件夹文件总数
@@ -68,10 +74,12 @@ def find(filelist,new_path,tn):
         if item.endswith(('.jpg','.png','.JPG','.PNG','.jpeg','JPEG')):
             #计算图片长宽比函数
             if new_path==file_path: i[tn]+=1 #想要总进度准确的话就开启这个
-            if get_size(newpath)>12288: #图片小于12M 
+            img_size=get_size(newpath)
+            if img_size>12288: #图片小于12M 
                 dst=os.path.join(file_path, '大',item)
-            elif get_size(newpath)<200: #图片小于200K 直接删除
-                os.remove(newpath)
+            elif img_size<200: #图片小于200K 直接删除
+                if img_size!=-1:
+                    os.remove(newpath)
                 continue
             else:#大于12M
                 try:
